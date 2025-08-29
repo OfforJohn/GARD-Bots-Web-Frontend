@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, Star, ChevronDown, Sun, Moon  } from "lucide-react";
+import { Search, Star, ChevronDown, Sun, Moon, X, Menu  } from "lucide-react";
 import { useState } from "react";
 
 interface Dashboard {
@@ -64,14 +64,29 @@ const dashboards: Dashboard[] = [
 
 const DiscoverPage: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
+  
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="flex h-screen w-screen bg-gray-50 dark:bg-gray-900">
         {/* Sidebar */}
-        <aside className="w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 flex flex-col">
-          <div className="p-4 text-xl font-bold text-gray-900 dark:text-gray-100">
-            Dune
+         {/* Sidebar (mobile drawer + desktop fixed) */}
+   <aside
+          className={`fixed md:static top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 transform transition-transform duration-300 z-40
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+        >
+          <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
+            <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              Dune
+            </span>
+            {/* Close button for mobile */}
+            <button
+              className="md:hidden text-gray-700 dark:text-gray-200"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <X className="w-6 h-6" />
+            </button>
           </div>
 
           {/* Search */}
@@ -115,41 +130,63 @@ const DiscoverPage: React.FC = () => {
             </button>
           </div>
         </aside>
+            {/* Overlay for mobile when sidebar is open */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col">
           {/* Sticky Header */}
-          <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
-            {/* Title */}
-            <header className="p-6">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                Discover
-              </h1>
-            </header>
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+  <header className="p-4 flex items-center justify-between">
+    {/* Left: Search icon */}
+   
+    {/* Title */}
+    <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+      Discover
+    </h1>
+  {/* Right side: Search + Hamburger */}
+    <div className="flex items-center space-x-3">
+      {/* Search icon */}
+<button className="p-2 text-gray-600 dark:text-gray-300 hover:text-orange-500 transition md:hidden">
+  <Search className="w-5 h-5" />
+</button>
 
-            {/* Tabs */}
-            <div className="flex space-x-6 px-6 text-sm border-b dark:border-gray-700">
-              <button className="pb-2 border-b-2 border-orange-500 text-orange-500 font-medium">
-                Dashboards
-              </button>
-              <button className="pb-2 text-gray-500 dark:text-gray-400">
-                Queries
-              </button>
-              <button className="pb-2 text-gray-500 dark:text-gray-400">
-                Creators
-              </button>
-              <button className="pb-2 text-gray-500 dark:text-gray-400">
-                Blockchains
-              </button>
-            </div>
 
-            {/* Trending Dropdown */}
-            <div className="px-6 py-3 border-b dark:border-gray-700 flex items-center">
-              <button className="flex items-center border px-3 py-1 rounded-md text-sm bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
-                Trending <ChevronDown className="ml-2 w-4 h-4" />
-              </button>
-            </div>
-          </div>
+      {/* Hamburger (mobile only) */}
+      <button
+        className="md:hidden p-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+    </div>
+  </header>
+
+  {/* Tabs */}
+  <div className="flex space-x-6 px-6 text-sm border-b dark:border-gray-700">
+    <button className="pb-2 border-b-2 border-orange-500 text-orange-500 font-medium">
+      Dashboards
+    </button>
+    <button className="pb-2 text-gray-500 dark:text-gray-400">Queries</button>
+    <button className="pb-2 text-gray-500 dark:text-gray-400">Creators</button>
+    <button className="pb-2 text-gray-500 dark:text-gray-400">Blockchains</button>
+  </div>
+
+  {/* Trending Dropdown */}
+ <div className="px-6 py-3 border-b dark:border-gray-700 flex items-center">
+  <button className="flex items-center border px-3 py-1 rounded-md text-sm bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-200 text-gray-700 dark:text-gray-900">
+    Trending <ChevronDown className="ml-2 w-4 h-4" />
+  </button>
+</div>
+
+</div>
+
 
           {/* Dashboard List */}
           <section className="flex-1 overflow-y-auto p-6 space-y-4">
