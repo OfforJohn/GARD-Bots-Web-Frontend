@@ -68,16 +68,15 @@ const DiscoverPage: React.FC = () => {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className="flex h-screen w-screen bg-gray-50 dark:bg-gray-900">
-        {/* Sidebar (always fixed on desktop) */}
+        {/* Sidebar */}
         <aside
           className={`fixed md:static top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700 transform transition-transform duration-300 z-40
-            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
         >
           <div className="flex justify-between items-center p-4 border-b dark:border-gray-700">
             <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
               Dune
             </span>
-            {/* Close button for mobile */}
             <button
               className="md:hidden text-gray-700 dark:text-gray-200"
               onClick={() => setSidebarOpen(false)}
@@ -93,9 +92,7 @@ const DiscoverPage: React.FC = () => {
               <input
                 type="text"
                 placeholder="Search dashboards, queries..."
-                className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-lg text-sm 
-                           placeholder-gray-400 
-                           focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white dark:focus:bg-gray-800 transition"
+                className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white dark:focus:bg-gray-800 transition"
               />
             </div>
           </div>
@@ -128,7 +125,7 @@ const DiscoverPage: React.FC = () => {
           </div>
         </aside>
 
-        {/* Overlay for mobile */}
+        {/* Mobile overlay */}
         {sidebarOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
@@ -137,21 +134,19 @@ const DiscoverPage: React.FC = () => {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 ml-0 md:ml-14 flex flex-col h-screen">
-          {/* Sticky Header */}
+        <main className="flex-1 flex flex-col h-screen overflow-hidden">
+          {/* Header */}
           <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
             <header className="p-4 flex items-center justify-between">
               <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 Discover
               </h1>
-              {/* Right side: Search + Hamburger */}
-              <div className="flex items-center space-x-3">
-                {/* Search icon */}
-               <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-orange-500 transition block md:hidden">
-    <Search className="w-5 h-5" />
-  </button>
 
-                {/* Hamburger (mobile only) */}
+              {/* Mobile icons */}
+              <div className="flex items-center space-x-3">
+                <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-orange-500 transition block md:hidden">
+                  <Search className="w-5 h-5" />
+                </button>
                 <button
                   className="md:hidden p-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   onClick={() => setSidebarOpen(true)}
@@ -171,7 +166,7 @@ const DiscoverPage: React.FC = () => {
               <button className="pb-2 text-gray-500 dark:text-gray-400">Blockchains</button>
             </div>
 
-            {/* Trending Dropdown */}
+            {/* Trending */}
             <div className="px-6 py-3 border-b dark:border-gray-700 flex items-center">
               <button className="flex items-center border px-3 py-1 rounded-md text-sm bg-white dark:bg-white hover:bg-gray-100 dark:hover:bg-gray-200 text-gray-700 dark:text-gray-900">
                 Trending <ChevronDown className="ml-2 w-4 h-4" />
@@ -179,8 +174,8 @@ const DiscoverPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Dashboard List (scrollable content) */}
-          <section className="flex-1 h-full w-full overflow-y-auto">
+          {/* Dashboard List */}
+          <section className="flex-1 overflow-y-auto px-6 py-4">
             {dashboards.map((item, idx) => (
               <div
                 key={idx}

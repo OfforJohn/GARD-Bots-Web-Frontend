@@ -1,8 +1,8 @@
 import React from 'react'
-import './App.css'
-import App from './App'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import './index.css' // Tailwind imports
+import App from './App'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -12,16 +12,17 @@ createRoot(document.getElementById('root') as HTMLElement).render(
         <Route
           path="/about"
           element={
-            <>
-              <div className="text-center">
-                <h1 className="text-xl">About</h1>
-                <div>
-                  <Link to="/" className="text-purple-400 underline">
-                    Home
-                  </Link>
-                </div>
-              </div>
-            </>
+            <div className="h-screen flex flex-col justify-center items-center bg-gray-50 dark:bg-gray-900">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                About Page
+              </h1>
+              <Link
+                to="/"
+                className="text-orange-500 dark:text-orange-400 underline"
+              >
+                Go Back Home
+              </Link>
+            </div>
           }
         />
       </Routes>
