@@ -20,10 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
-  darkMode,
-  setDarkMode,
   sidebarOpen,
-  setSidebarOpen,
 }) => {
   return (
     <aside
